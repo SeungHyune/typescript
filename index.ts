@@ -1,20 +1,34 @@
-// 1강 변수에 타입지정 가능 - (장점) 타입이 실수로 변경될 때 에러 내줌
-let 이름 :string = 'kim';
-let 나이 :number = 50;
-let 결혼했니 :boolean = false;
+// Union Type
+let 회원 :number | string = 'kim';
+회원 = 123;
 
-// undifined, null로도 타입 지정 가능
-let 회원들 :string[] = ['kim', 'park']
-let 회원들2 :{ member1 : string, member2 : string } = { member1 : 'kim', member2 : 'park' }
+let 회원들 :(number | string)[] = [1,2,3,'4']
+let obj:{ a : string | number } = { a : 123 }
 
-//예제 문제
-//Q1. 여러분의 이름, 나이, 출생지역을 변수로 각각 저장해봅시다.
-let name1 :string = '조승현';
-let age :number = 28;
-let region :{region : string} = {region : 'Osansi'}
+// any타입 모든 자료형 허용해줌
+// 쓰는 순간 typescript 쓰는 의미 상실
+let 이름 :any;
+이름 = 123;
+이름 = [];
+이름 = 'kim';
 
-//Q2. 여러분이 가장 좋아하는 곡과 가수이름을 변수에 object 자료형으로 담아보십시오.
-let obj :{singer : string, song : string} = { singer : 'BTS', song : 'Butter'}
+let agee :unknown = 1;
 
-//Q3. 다음과 같이 생긴 자료의 타입지정을 해보도록 합시다.
-let project:{member:string[], days : number, started : boolean} = { member : ['kim', 'park'], days : 30, started : true }
+//(숙제1) 다음 변수 4개에 타입을 지정해봅시다.
+let user:string = 'kim';
+let age:undefined = undefined;
+let married:boolean = false; 
+let 철수:(unknown)[] = [user, age, married];
+
+//(숙제2) 학교라는 변수에 타입지정해보십시오.
+let 학교:{
+    score : (number | boolean)[],
+    teacher : string,
+    friend : (string | string[])
+} = {
+    score : [100, 97, 84],
+    teacher : 'Phil',
+    friend : 'John'
+}
+학교.score[4] = false;
+학교.friend = ['Lee' , 학교.teacher]
