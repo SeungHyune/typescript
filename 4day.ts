@@ -113,9 +113,10 @@ let fn : 함수타입 = function(){
     return 1
 }
 
-type Member = { name : string, plueOne : (a:number) => { number },  changeName : () => void }
+type Member = { name : string, age:number, plusOne : (a:number) => number,  changeName : () => void }
 let 회원정보 : Member = {
     name : 'kim',
+    age : 30,
     plusOne(a){
         return a + 1
     },
@@ -131,6 +132,30 @@ let 회원정보 : Member = {
 // - changeName이라는 속성은 함수여야하고, 아무것도 return하면 안됩니다. 
 // - type 키워드를 쓰든 말든 알아서 합시다. 
 
-let cutZero = (a:string) => {
-
+type StringZero = (a:string)=> string
+let cutZero : StringZero = (a) => {
+    let str = a;
+    if(typeof str == "string" && str[0] == "0"){
+        str = str.slice(1)
+    }
+    console.log(str)
+    return str
 }
+cutZero("0test")
+
+type removeDash2 = (num:string) => number
+let removeDash:removeDash2 = (num)=>{
+    let result = num.replace(/-/g, "");
+    console.log(result)
+    return Number(result)
+}
+removeDash('010-2822-7820');
+
+type 함수타입1 = (a:string) => string;
+type 함수타입2 = (a:string) => number;
+function 만들함수2(a:string,b:함수타입1,c:함수타입2){
+    let result = b(a);
+    let result2 = c(result)
+    console.log(result2)
+}
+만들함수2('010-1234-2222', cutZero, removeDash)

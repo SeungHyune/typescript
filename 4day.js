@@ -47,15 +47,31 @@ let fn = function () {
 };
 let 회원정보 = {
     name: 'kim',
+    age: 30,
     plusOne(a) {
         return a + 1;
     },
     changeName: () => { }
 };
 회원정보.plusOne(2);
-// (숙제1) 위 코드에서 회원정보라는 변수에 타입지정 알아서 해보십시오. 
-// - plusOne이라는 속성은 함수여야하고, 숫자를 넣어서 숫자를 뱉는 함수여야합니다.
-// - changeName이라는 속성은 함수여야하고, 아무것도 return하면 안됩니다. 
-// - type 키워드를 쓰든 말든 알아서 합시다. 
 let cutZero = (a) => {
+    let str = a;
+    if (typeof str == "string" && str[0] == "0") {
+        str = str.slice(1);
+    }
+    console.log(str);
+    return str;
 };
+cutZero("0test");
+let removeDash = (num) => {
+    let result = num.replace(/-/g, "");
+    console.log(result);
+    return Number(result);
+};
+removeDash('010-2822-7820');
+function 만들함수2(a, b, c) {
+    let result = b(a);
+    let result2 = c(result);
+    console.log(result2);
+}
+만들함수2('010-1234-2222', cutZero, removeDash);
