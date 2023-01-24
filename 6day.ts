@@ -30,7 +30,7 @@ class World {
     num:number[];
     str:string[];
     test;
-    constructor(...a){
+    constructor(...a:(string | number)[]){
         this.num = [];
         this.str = [];
         this.test = a.forEach((data:string|number)=>{

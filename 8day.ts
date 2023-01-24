@@ -2,7 +2,7 @@
 
 class Public {
     public name : string;
-    constructor(a){
+    constructor(a:string){
         this.name = a
     }
     public publicFn(){
@@ -20,7 +20,7 @@ console.log(자식1)
 class Private {
     name : string;
     private familyName : string = 'kim';
-    constructor(a){
+    constructor(a:string){
         this.name = a + this.familyName
     }
     changeFamilyName(){
@@ -37,7 +37,7 @@ class Person2 {
     //name:string;
     color:string;
     size :string;
-    constructor(public name:string, b, c, public num:number){
+    constructor(public name:string, b:string, c:string, public num:number){
         this.color = b;
         this.size = c
     }
