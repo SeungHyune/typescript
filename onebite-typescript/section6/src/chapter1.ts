@@ -7,7 +7,7 @@ const employee = {
     age: 28,
     position: 'developer',
     work() {
-        console.log('일침');
+        console.log('일함');
     },
 };
 
@@ -26,7 +26,7 @@ class Employee {
 
     // 메서드
     work() {
-        console.log('일침');
+        console.log('일함');
     }
 }
 
