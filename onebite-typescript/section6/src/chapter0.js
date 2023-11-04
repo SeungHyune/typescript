@@ -48,3 +48,13 @@ console.log(studentDeveloper);
 studentDeveloper.programming();
 
 // 클래스를 이용해서 만든 객체 -> 인스턴스
+
+// extends를 활용한 자식 클래스 생성
+class StudentInfo extends StudentDeveloper {
+    constructor(name, grade, age, favoriteSkill) {
+        super(name, grade, age, favoriteSkill)
+    }
+}
+
+const studentInfo = new StudentInfo('홍길동', 'B', 27, 'JavaScript');
+console.log(studentInfo)
