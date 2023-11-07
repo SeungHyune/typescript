@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "outDir": "dist",
-    "strict": false,
-    "moduleDetection": "force"
+    "target": "ESNext", // 컴파일 결과 생성되는 자바스크립트 코드의 버전을 결정한다. (ESNext는 최신 자바스크립트 버전을 의미한다.)
+    "module": "ESNext", // 컴파일 결과 생성되는 자바스크립트 코드의 모듈 시스템을 결정한다.
+    "outDir": "dist",   // 컴파일 결과 생성되는 자바스크립트 파일의 위치를 결정한다. 
+    "strict": true,    // 엄격한 타입 검사 여부를 설정한다.
+    "moduleDetection": "force" // 모든 타입스크립트 파일에 export 키워드를 추가하여 서로 다른 모듈로 취급하도록 만들어준다.
   },
   "ts-node": {
     "esm": true,
   },
-  "include" : ["src","test"]
+  "include" : ["src","test"] // tsc로 컴파일 할 타입스크립트 파일의 범위를 설정한다. (폴더 이름)
 }
