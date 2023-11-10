@@ -44,5 +44,6 @@ type CountryNumberCodes = {
 }
 
 let countryNumberCodes: CountryNumberCodes = {
+    UnitedState: 848,
     Korea: 410,
 }
