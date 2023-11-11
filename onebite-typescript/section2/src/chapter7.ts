@@ -6,6 +6,10 @@ function func1(): string {
     return "hello";
 }
 
+function funcNum(): number {
+    return 1;
+}
+
 function func2(): void {
     console.log("hello");
 }
