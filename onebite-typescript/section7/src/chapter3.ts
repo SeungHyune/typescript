@@ -1,24 +1,27 @@
 /**
- * 제네릭 인터페이스
+ * 제네릭 인터페이스(Generic Interface)
  */
 
+// K, V = 타입 변수
 interface KeyPair<K, V> {
-    key: K;
-    value: V;
+    key: K,
+    value: V
 }
 
+// 재네릭 인터페이스로 사용할 때 <> 안에 타입을 명시적으로 작성해주어야 한다.
 let keyPair: KeyPair<string, number> = {
-    key: "key",
-    value: 0
+    key: '1',
+    value: 1
 }
 
 let keyPair2: KeyPair<boolean, string[]> = {
     key: true,
-    value: ['1']
+    value: ['a', 'b']
 }
 
+
 /**
- * 인덱스 시그니쳐
+ * 인덱스 시그니처
  */
 
 interface NumberMap {
@@ -26,19 +29,20 @@ interface NumberMap {
 }
 
 let numberMap1: NumberMap = {
-    key: -1231,
-    key2: 123
+    key: 123,
+    age: 111,
+    id: 000
 }
 
 interface Map<V> {
     [key: string]: V;
 }
 
-let stringMap1: Map<string> = {
-    key: 'Hello~',
+let stringMap: Map<string> = {
+    key: '키',
 }
 
-let booleanMap1: Map<boolean> = {
+let booleanMap: Map<boolean> = {
     key: true,
 }
 
@@ -47,17 +51,17 @@ let booleanMap1: Map<boolean> = {
  */
 
 type Map2<V> = {
-    [key: string] : V;
-}
+    [key: string]: V;
+};
 
 let stringMap2: Map2<string> = {
-    key: 'Hello'
+    key: 'hello',
 }
 
 /**
  * 제네릭 인터페이스의 활용 예시
- * -> 유저 관리 프로그램
- * -> 유저 구분 : 학생 유저 / 개발자 유저
+ * - 유저 관리 프로트램
+ * - 유저 구분: 학생 / 개발자
  */
 
 interface Student {
@@ -75,29 +79,25 @@ interface User<T> {
     profile: T
 }
 
-function goToSchool(user: User<Student>) {
-    // if(user.profile.type !== 'student') {
-    //     console.log('잘 못 오셨습니다.');
-    //     return;
-    // }
-    const school = user.profile.school;
-    console.log(`${school}로 등교 완료`)
-}
-
 const developerUser: User<Developer> = {
     name: '조승현',
     profile: {
         type: 'developer',
-        skill: 'typescript'
-    },
-}
-
-const studentUser: User<Student> = {
-    name: '조승현',
-    profile: {
-        type: 'student',
-        school: 't'
+        skill: 'TypeScript',
     }
 }
 
-goToSchool(studentUser)
+const studentUser: User<Student> = {
+    name: '조승현2',
+    profile: {
+        type: 'student',
+        school: '서운대학교',
+    }
+}
+
+function goToSchool(user: User<Student>) {
+    const school = user.profile.school;
+    console.log(`${school}로 등교 완료 !!`);
+}
+
+goToSchool(studentUser);

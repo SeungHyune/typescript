@@ -4,8 +4,8 @@
 
 const promise = new Promise<number>((resolve, reject) => {
     setTimeout(() => {
-        // resolve(20);
-        reject('~~ 때문에 실패');
+        resolve(20);
+        reject('실패 !!');
     }, 3000);
 });
 
@@ -35,7 +35,7 @@ function fetchPost(): Promise<Post> {
             resolve({
                 id: 1,
                 title: '게시글 제목',
-                content: '게시글 내용',
+                content: '게시글 컨텐츠'
             });
         }, 3000);
     });
@@ -44,5 +44,5 @@ function fetchPost(): Promise<Post> {
 const postRequest = fetchPost();
 
 postRequest.then((post) => {
-    post.id
+
 });

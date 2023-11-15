@@ -5,7 +5,7 @@
 class List<T> {
     constructor(private list: T[]) {}
 
-    push(data: T) {
+    push(data: T){
         this.list.push(data);
     }
 
@@ -18,11 +18,12 @@ class List<T> {
     }
 }
 
-const numberList = new List([1, 2, 3]);
-numberList.pop();
+const numberList = new List([1,2,3]);
 numberList.push(4);
+numberList.pop();
 numberList.print();
 
-const stringList = new List(['1', '2', '3']);
-stringList.push('Hi');
+const stringList = new List(['1','2','3']);
+stringList.push('5');
+stringList.pop();
 stringList.print();
