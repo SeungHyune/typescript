@@ -20,16 +20,15 @@ const add = (a: number, b: number) => a + b;
  * 함수의 매개변수
  */
 
-function introduce(name = '조승현', age: number, tall?: number) {
+function introduce(age: number, tall?: number, name = '조승현') {
     console.log(`name : ${name}`);
     if(typeof tall === 'number') {
         console.log(`tall : ${tall + 10}`);
     }
 }
 
-introduce("조승현", 28, 177);
-
-introduce("조승현", 28);
+introduce(28, 177, 'Rekoding');
+introduce(28);
 
 function getSum(...rest: [number, number, number]) {
     let sum = 0;
@@ -39,4 +38,49 @@ function getSum(...rest: [number, number, number]) {
 }
 
 getSum(1, 2, 3); // 6
-// getSum(1, 2, 3, 4, 5); // 15
+getSum(2, 3, 4); // 9
+// getSum(1, 2, 3, 4, 5); // 15 (tuple 타입이라서 오류가 나타난다.)
+
+
+// 1)
+const btn = document.querySelector('button');
+// if(btn instanceof HTMLButtonElement) {}
+if(btn) {
+    btn.classList.add('btn');
+    btn.id = 'abc';
+}
+
+// 2)
+function isNum(val: unknown): val is number {
+    return typeof val === 'number';
+}
+function toTwoDecimals(val: number | string) {
+    if(isNum(val)) {
+        val.toFixed(2);
+    } else{
+        val.slice(0, 2);
+    }
+}
+toTwoDecimals(3.141592);
+toTwoDecimals('Hello world');
+
+// 3)
+type UserA = { name: string, age: number }
+type UserB = { id: string, email: string }
+
+function isUserA(user: unknown): user is UserA {
+    if(user && user.constructor === Object) {
+        const u = user as UserA
+        return typeof u.name === 'string' && typeof u.age === 'number'
+    } 
+    return false;
+}
+
+fetch('https//exam.site')
+.then(res => res.json())
+.then((user: UserA | UserB) => {
+    if(isUserA(user)) {
+        console.log(user.name[0]);
+        console.log(user.age - 10);
+    }
+})
