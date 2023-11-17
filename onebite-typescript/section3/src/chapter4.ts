@@ -5,13 +5,19 @@
 
 /**
  * 1. 합집합 타입 - Union 타입
+ * or 또는 연산자
  */
 
 let a: string | number | boolean;
 a = 1;
-a = "hello";
-
+a = 'hello';
 a = true;
+// a = null; // 불가능
+
+let b: string | number;
+b = 111;
+b = 'test';
+// b = true; // 불가능
 
 const arr: (number|string|boolean)[] = [28, '조승현', true];
 
@@ -37,6 +43,34 @@ let union3: Union1 = {
 //     name: '';
 // }
 
+type Animal = {
+    name: string;
+    color: string;
+    age: number;
+    type: string;
+}
+
+type AnimalSound = {
+    sound: string;
+    move: string;
+}
+
+type AnimalUnion = Animal | AnimalSound;
+
+const animal: AnimalUnion = {
+    sound: '어흥!',
+    move: '당당'
+}
+
+const animalAll: AnimalUnion = {
+    name: '호랑이',
+    color: 'yellow & black',
+    age: 3,
+    type: '포유류',
+    sound: '어흥',
+    move: '성큼성큼',
+}
+
 /**
  * 2. 교집합 타입 - Intersection 타입
  */
@@ -58,4 +92,19 @@ let intersection: Intersection = {
     name: '',
     color: '',
     age: 1
+}
+
+type AnimalName = {
+    name: string;
+}
+
+type AnimalColor = {
+    color: string;
+}
+
+type AnimalIntersection = AnimalName & AnimalColor;
+
+const intersectionAnimal: AnimalIntersection = {
+    name: '사자',
+    color: 'yellow',
 }
