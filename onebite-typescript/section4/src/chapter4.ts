@@ -3,14 +3,14 @@
  */
 
 type Dog = {
-    name: string,
-    isBark: boolean
-};
+    name: string;
+    isBark: boolean;
+}
 
 type Cat = {
-    name: string,
-    isScratch: boolean
-};
+    name: string;
+    isScratch: boolean;
+}
 
 type Animal = Dog | Cat;
 
@@ -19,15 +19,15 @@ function isDog(animal: Animal): animal is Dog {
 }
 
 function isCat(animal: Animal): animal is Cat {
-    return (animal as Cat).isScratch !== undefined;
+    return (animal as Cat).isScratch !== undefined;;
 }
 
 function warning(animal: Animal) {
-    if (isDog(animal)) {
+    if(isDog(animal)) {
         // 강아지
-        console.log(animal.isBark);
-    }   else if(isCat(animal)){
+        animal // Dog
+    } else if(isCat(animal)) {
         // 고양이
-        console.log(animal.isScratch);
+        animal // Cat
     }
 }
