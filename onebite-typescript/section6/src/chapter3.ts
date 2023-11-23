@@ -8,14 +8,19 @@ interface CharacterInterface {
     move(): void;
 }
 
-class Charactor implements CharacterInterface {
+class Character implements CharacterInterface {
+    // name: string;
+    // moveSpeed: number;
+
     constructor(
         public name: string, 
-        public moveSpeed: number,
-        private extra: string
-    ) {}
+        public moveSpeed: number) {}
 
-    move(): void {
-        console.log(`${this.moveSpeed} 속도로 이동!`);
+    move() {
+        console.log(`${this.moveSpeed} 속도로 이동`);
     }
 }
+
+const character = new Character('조승현', 90);
+
+console.log(character);

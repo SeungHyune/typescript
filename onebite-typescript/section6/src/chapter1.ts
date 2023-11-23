@@ -1,5 +1,5 @@
 /**
- * 타입스크립트의 클래스
+ * 타입스크립트 클래스
  */
 
 const employee = {
@@ -7,7 +7,7 @@ const employee = {
     age: 28,
     position: 'developer',
     work() {
-        console.log('일함');
+        console.log('프로그래밍함');
     },
 };
 
@@ -32,24 +32,26 @@ class Employee {
 
 class ExecutiveOfficer extends Employee {
     // 필드
-    officeNumber: number;
+    officerNumber: number;
 
     // 생성자
-    constructor(name: string, age: number, position: string, officeNumber: number) {
+    constructor(
+        name: string, 
+        age: number, 
+        position: string, 
+        officerNumber: number
+    ) {
         super(name, age, position);
-        this.officeNumber = officeNumber;;
+        this.officerNumber = officerNumber;
     }
 }
 
-const employeeB = new Employee('조승현', 28, 'developer');
-console.log(employeeB);
+const employeeB = new Employee('조승현', 26, 'developer');
+console.log(employee);
 
-// 타입스크립트의 클래스는 타입으로도 활용할 수 있다.
 const employeeC: Employee = {
-    name: '조승현',
-    age: 28,
-    position: '프론트엔드 개발자',
-    work() {
-        console.log('일하는 중')       
-    }
+    name: '',
+    age: 0,
+    position: '',
+    work() { }
 }
