@@ -26,3 +26,9 @@ let num2 = GenericFunc(10);
 let bool2 = GenericFunc(true);
 let str2 = GenericFunc('Rekoding');
 let arr = GenericFunc<[number, number, number]>([1, 2, 3]);
+
+function func2<T>(number: T): T {
+    return number;
+}
+
+let number1 = func2(5);
