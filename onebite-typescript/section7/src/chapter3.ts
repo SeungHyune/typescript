@@ -1,24 +1,23 @@
 /**
- * 제네릭 인터페이스(Generic Interface)
+ * 제네릭 인터페이스
  */
 
-// K, V = 타입 변수
+//타입 변수 - K, V
+// 제네릭 인터페이스의 타입 변수는 <>로 타입 선언 시 미리 지정해줘야 한다.
 interface KeyPair<K, V> {
-    key: K,
-    value: V
+    key: K;
+    value: V;
 }
 
-// 재네릭 인터페이스로 사용할 때 <> 안에 타입을 명시적으로 작성해주어야 한다.
-let keyPair: KeyPair<string, number> = {
-    key: '1',
-    value: 1
+let keypair: KeyPair<string, number> = {
+    key: 'key',
+    value: 0,
 }
 
-let keyPair2: KeyPair<boolean, string[]> = {
+let keypair2: KeyPair<boolean, string[]> = {
     key: true,
-    value: ['a', 'b']
+    value: ['1', '2', '3'],
 }
-
 
 /**
  * 인덱스 시그니처
@@ -29,9 +28,8 @@ interface NumberMap {
 }
 
 let numberMap1: NumberMap = {
-    key: 123,
-    age: 111,
-    id: 000
+    key: 1234,
+    key2: Infinity
 }
 
 interface Map<V> {
@@ -39,29 +37,30 @@ interface Map<V> {
 }
 
 let stringMap: Map<string> = {
-    key: '키',
+    key: '테스트',
+    food: 'pizza'
 }
 
-let booleanMap: Map<boolean> = {
+let foodMap: Map<boolean> = {
     key: true,
 }
 
 /**
  * 제네릭 타입 별칭
  */
-
+// 제네릭 인터페이스와 동일하게 타입 선언 시 <> 타입을 미리 선언해 주어야 한다.
 type Map2<V> = {
-    [key: string]: V;
-};
+    [key: string]: V
+}
 
 let stringMap2: Map2<string> = {
-    key: 'hello',
+    key: 'key',
 }
 
 /**
  * 제네릭 인터페이스의 활용 예시
- * - 유저 관리 프로트램
- * - 유저 구분: 학생 / 개발자
+ * - 유저 관리 프로그램
+ * - 유저구분: 학생 유저 / 개발자 유저
  */
 
 interface Student {
@@ -83,21 +82,33 @@ const developerUser: User<Developer> = {
     name: '조승현',
     profile: {
         type: 'developer',
-        skill: 'TypeScript',
+        skill: 'JavaScript'
     }
 }
 
 const studentUser: User<Student> = {
-    name: '조승현2',
+    name: '길동이',
     profile: {
         type: 'student',
-        school: '서운대학교',
+        school: '중앙대학교'
     }
 }
 
 function goToSchool(user: User<Student>) {
+    if(user.profile.type !== 'student') {
+        console.log('잘 못 오셨습니다.');
+        return;
+    }
+
     const school = user.profile.school;
-    console.log(`${school}로 등교 완료 !!`);
+    console.log(`${school}로 등교 완료 !`);
 }
 
 goToSchool(studentUser);
+
+function skillUp(user: User<Developer>) {
+    const skill = user.profile.skill;
+    console.log(`당신은 ${skill}에 재능이 있으신구요?`)
+}
+
+skillUp(developerUser);

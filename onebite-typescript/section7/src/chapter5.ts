@@ -2,15 +2,15 @@
  * 프로미스
  */
 
-const promise = new Promise<number>((resolve, reject) => {
+const promise = new Promise<number> ((resolve, reject) => {
     setTimeout(() => {
-        resolve(20);
-        reject('실패 !!');
-    }, 3000);
+        // resolve(20);
+        reject('호출 실패 !!')
+    }, 3000)
 });
 
 promise.then((response) => {
-    console.log(response * 10); // 20
+    console.log(response * 10); // 200
 });
 
 promise.catch((err) => {
@@ -30,19 +30,43 @@ interface Post {
 }
 
 function fetchPost(): Promise<Post> {
-    return new Promise((resolve, reject) => {
+    return new Promise ((resolve) => {
         setTimeout(() => {
             resolve({
                 id: 1,
                 title: '게시글 제목',
-                content: '게시글 컨텐츠'
-            });
+                content: '게시글 내용'
+            })
         }, 3000);
-    });
+    })
 }
 
 const postRequest = fetchPost();
 
 postRequest.then((post) => {
-
+    post.id
 });
+
+
+interface UserData {
+    name: string;
+    age: number;
+    school: string;
+}
+
+function fetchUserData(): Promise<UserData> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                name: '조승현',
+                age: 28,
+                school: '서울대학교'
+            })
+        }, 1000);
+    })
+}
+
+const userDataRequest = fetchUserData();
+userDataRequest.then((user) => {
+    console.log(user.school);
+})
