@@ -8,17 +8,17 @@ interface Post {
     title: string;
     tags: string[];
     content: string;
-    thumbnailURL?: string;
+    thumbnaiURL?: string;
 }
 
 type Partial<T> = {
-    [key in keyof T]?: T[key];
+    [key in keyof T]?: T[key]
 };
 
 const draft: Partial<Post> = {
     title: '제목',
-    content: '...'
-};
+    content: '내용'
+}
 
 /**
  * Required<T>
@@ -27,30 +27,30 @@ const draft: Partial<Post> = {
  */
 
 type Required<T> = {
-    [key in keyof T]-?: T[key];
-};
+    [key in keyof T]-?: T[key]; 
+}
 
 const withThumbnailPost: Required<Post> = {
-    title: '타이틀',
+    title: 'Rekoding',
     tags: ['ts'],
     content: '',
-    thumbnailURL: ''
-}
+    thumbnaiURL: '~',
+};
 
 /**
  * Readonly<T>
- * -> 읽기전용 수정불가
+ * -> 읽기전용 프로퍼티
  * -> 특정 객체 타입에서 모든 프로퍼티를 읽기 전용 프로퍼티로 만들어주는 타입
  */
 
 type Readonly<T> = {
-    readonly [key in keyof T]: T[key];
-};
+    readonly [key in keyof T]: T[key]
+}
 
 const readonlyPost: Readonly<Post> = {
-    title: '읽기 전용 게시물',
+    title: '읽기 전용 게시글 입니다.',
     tags: [],
-    content: ''
-};
+    content: ""
+}
 
-// readonlyPost.content = '';
+// readonlyPost.content = "수정!!"

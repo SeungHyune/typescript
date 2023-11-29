@@ -1,7 +1,6 @@
 /**
  * Pick<T, K>
- * -> 뽑다, 고르다
- * -> 객체 타입으로부터 특정 프로퍼티만 딱 골라내는 그런 타입
+ * -> 객체 타입으로부터 특정 프로퍼티만 딱 골라내는 타입
  */
 
 interface Post {
@@ -18,37 +17,34 @@ type Pick<T, K extends keyof T> = {
 };
 
 const legacyPost: Pick<Post, "title" | "content"> = {
-    title: '제목',
-    content: '내용'
-}
+    title: '오래된 게시글',
+    content: '오래된 컨텐츠'
+};
 
 /**
  * Omit<T, K>
- * -> 생략하다, 빼다
  * -> 객체 타입으로부터 특정 프로퍼티를 제거하는 타입
  */
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 // T = Post, K = 'title'
-// Pick<Post, Exclude<keyof Post, 'title'>>
 // Pick<Post, Exclude<'title' | 'content' | 'tags' | 'thumbnailURL', 'title'>>
-// Pick<Post, 'content' | 'tags' | 'thumbnailURL'>
+// Pick<Post, 'content' | 'tags' | 'thumbnailURL'
 
 const noTitlePost: Omit<Post, 'title'> = {
     content: '',
     tags: [],
-    thumbnailURL: ''
+    thumbnailURL: '',
 };
 
 /**
- * Record<K, V>
+ * Record<T, V>
+ * 
  */
 
 type Record<K extends keyof any, V> = {
-  [key in K]: V;  
-};
+    [key in K]: V
+}
 
-type Thumbnail = Record<
-    'large' | 'medium' | 'small' | 'watch', 
-    { url: string; size: number }
->;
+type Thumbnail = Record<"large" | "medium" | "small" | "watch", { url: string, size: number }>
+
