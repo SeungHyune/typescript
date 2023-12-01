@@ -14,12 +14,18 @@ export default function Editor(props: Props) {
         setText(e.target.value);
     }
 
-    const onClickHandle = () => {
+    const onSubmitHandle = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         dispatch?.onClickAdd(text);
+        setText('');
     }
 
-    return <div>
-        <input type="text" value={text} onChange={onChangeInput} />
-        <button onClick={onClickHandle}>추가</button>
-    </div>
+    return (
+        <div className="editor">
+            <form onSubmit={onSubmitHandle}>
+                <input type="text" value={text} onChange={onChangeInput} />
+                <button>추가</button>
+            </form>
+        </div>
+    )
 }

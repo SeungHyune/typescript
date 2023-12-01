@@ -49,6 +49,7 @@ function App() {
         content: text,
       }
     })
+
   };
 
   const onClickDelete = (id: number) => {
@@ -66,17 +67,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Todo</h1>
+      <h1>TodoList</h1>
       <TodoStateContext.Provider value={todos}>
         <TodoDispatchContext.Provider value={{
           onClickAdd,
           onClickDelete
         }}>
-          <Editor/>
-          <div>
-            {todos.map(todo => (
-              <TodoItem key={todo.id} {...todo} />
-            ))}
+          <div className="todo-wrap">
+            <Editor/>
+            <ul>
+              {todos.map(todo => (
+                <TodoItem key={todo.id} {...todo} />
+              ))}
+            </ul>
           </div>
         </TodoDispatchContext.Provider>
       </TodoStateContext.Provider>
