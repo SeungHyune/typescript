@@ -1,17 +1,32 @@
-import React, { useState, useRef, useEffect, useReducer, useContext } from 'react';
+import React, { useRef, useEffect, useReducer, useContext } from 'react';
 import './App.css';
 import Editor from './components/Editor';
 import TodoItem from './components/TodoItem';
 import { Todo } from './types/types';
 import _ from 'lodash';
 
-type Action = {
+type onCreateTodo = {
   type: 'CREATE';
   data: {
     id: number;
     content: string;
   }
-} | { type: 'DELETE' ; id: number};
+}
+
+type onDeleteTodo = {
+  type: 'DELETE' ; 
+  id: number
+}
+
+type onUpdateTodo = {
+  type: 'UPDATE';
+  data: {
+    id: number;
+    content: string;
+  }
+}
+
+type Action = onCreateTodo | onDeleteTodo | onUpdateTodo
 
 function reducer(state: Todo[], action: Action) {
   switch(action.type) {
@@ -19,7 +34,10 @@ function reducer(state: Todo[], action: Action) {
       return [...state, action.data];
     }
     case 'DELETE': {
-      return state.filter((it) => it.id !== action.id);
+      return state.filter((todo) => todo.id !== action.id);
+    }
+    case 'UPDATE': {
+      return state.filter((todo) => todo.id === action.data.id ? {...todo, content: action.data.content} : todo)
     }
   }
 }
@@ -28,6 +46,7 @@ export const TodoStateContext = React.createContext<Todo[] | null>(null);
 export const TodoDispatchContext = React.createContext<{
   onClickAdd: (text: string) => void;
   onClickDelete: (id: number) => void;
+  onTodoUpdate: (id: number, text: string) => void;
 } | null>(null);
 
 export function useTodoDispatch() {
@@ -53,11 +72,19 @@ function App() {
   };
 
   const onClickDelete = (id: number) => {
-    const newTodos = todos.filter(todo => todo.id !== id);
-    
     dispatch({
       type: 'DELETE',
       id: id,
+    })
+  }
+
+  const onTodoUpdate = (id: number, text: string) => {
+    dispatch({
+      type: 'UPDATE',
+      data: {
+        id,
+        content: text
+      }
     })
   }
 
@@ -71,7 +98,8 @@ function App() {
       <TodoStateContext.Provider value={todos}>
         <TodoDispatchContext.Provider value={{
           onClickAdd,
-          onClickDelete
+          onClickDelete,
+          onTodoUpdate
         }}>
           <div className="todo-wrap">
             <Editor/>

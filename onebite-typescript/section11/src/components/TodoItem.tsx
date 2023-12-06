@@ -33,7 +33,7 @@ export default function TodoItem(props: Props) {
             setCurrentTodoText(props.content);
             setIsEdit(false);
         } else if (e.key === 'Enter') {
-            // props로 전달 받은 수정 함수 호출하면서 매개변수로 id와 변경된 텍스트 전달
+            dispatch.onTodoUpdate(props.id, currentTodoText);
             setIsEdit(false);
         }
     }
