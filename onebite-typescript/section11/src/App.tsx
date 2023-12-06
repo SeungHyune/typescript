@@ -1,84 +1,94 @@
-import React, { useRef, useEffect, useReducer, useContext } from 'react';
+import React, { useReducer, useContext } from 'react';
 import './App.css';
 import Editor from './components/Editor';
-import TodoItem from './components/TodoItem';
+import TodoList from './components/TodoList';
 import { Todo } from './types/types';
+import { setItem, getItem } from './utils/storage';
+import { generateUUID } from'./utils/uuid';
 import _ from 'lodash';
 
 type onCreateTodo = {
   type: 'CREATE';
   data: {
-    id: number;
+    id: string;
     content: string;
   }
 }
 
 type onDeleteTodo = {
   type: 'DELETE' ; 
-  id: number
+  id: string;
 }
 
 type onUpdateTodo = {
   type: 'UPDATE';
   data: {
-    id: number;
+    id: string;
     content: string;
   }
 }
 
 type Action = onCreateTodo | onDeleteTodo | onUpdateTodo
 
+const TODOS = 'todos';
+
 function reducer(state: Todo[], action: Action) {
   switch(action.type) {
     case 'CREATE': {
+      setItem(TODOS, [...state, action.data])
       return [...state, action.data];
     }
     case 'DELETE': {
-      return state.filter((todo) => todo.id !== action.id);
+      const removeTodos = state.filter((todo) => todo.id !== action.id);
+      setItem(TODOS, [...removeTodos]);
+      return removeTodos;
     }
     case 'UPDATE': {
-      return state.filter((todo) => todo.id === action.data.id ? {...todo, content: action.data.content} : todo)
+      const updateTodoIndex = state.findIndex(todo => todo.id === action.data.id);
+      state[updateTodoIndex] = {...state[updateTodoIndex], content: action.data.content};
+      setItem(TODOS, [...state]);
+      return state;
     }
   }
 }
 
 export const TodoStateContext = React.createContext<Todo[] | null>(null);
+
 export const TodoDispatchContext = React.createContext<{
   onClickAdd: (text: string) => void;
-  onClickDelete: (id: number) => void;
-  onTodoUpdate: (id: number, text: string) => void;
+  onClickDelete: (id: string) => void;
+  onTodoUpdate: (id: string, text: string) => void;
+
 } | null>(null);
 
 export function useTodoDispatch() {
   const dispatch = useContext(TodoDispatchContext);
-  if(!dispatch) throw new Error('TodoDispatchContext에 문제가 있다.');
+  if(!dispatch) throw new Error('TodoDispatchContext에 문제가 있습니다.');
   return dispatch
 }
 
 function App() {
-  const [todos, dispatch] = useReducer(reducer, []);
-
-  const idRef = useRef(0);
+  const [todos, dispatch] = useReducer(reducer, getItem(TODOS, []));
 
   const onClickAdd = (text: string) => {
     dispatch({
       type: 'CREATE',
       data: {
-        id: idRef.current++,
+        id: generateUUID(),
         content: text,
       }
     })
 
   };
 
-  const onClickDelete = (id: number) => {
+  const onClickDelete = (id: string) => {
     dispatch({
       type: 'DELETE',
-      id: id,
+      id,
     })
   }
 
-  const onTodoUpdate = (id: number, text: string) => {
+  const onTodoUpdate = (id: string, text: string) => {
     dispatch({
       type: 'UPDATE',
       data: {
@@ -87,10 +97,6 @@ function App() {
       }
     })
   }
-
-  useEffect(() => {
-    console.log(todos);
-  }, [todos])
 
   return (
     <div className="App">
@@ -103,11 +109,7 @@ function App() {
         }}>
           <div className="todo-wrap">
             <Editor/>
-            <ul>
-              {todos.map(todo => (
-                <TodoItem key={todo.id} {...todo} />
-              ))}
-            </ul>
+            <TodoList todos={todos} />
           </div>
         </TodoDispatchContext.Provider>
       </TodoStateContext.Provider>
