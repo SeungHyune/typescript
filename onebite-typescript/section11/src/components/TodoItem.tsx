@@ -8,6 +8,7 @@ export default function TodoItem(props: Props) {
     const todoTextRef = useRef<HTMLInputElement>(null);
     const [isEdit, setIsEdit] = useState(false);
     const [currentTodoText, setCurrentTodoText] = useState(props.content);
+    const [completed, setCompleted] = useState(props.completed);
 
     const dispatch = useTodoDispatch();
 
@@ -33,17 +34,23 @@ export default function TodoItem(props: Props) {
             setCurrentTodoText(props.content);
             setIsEdit(false);
         } else if (e.key === 'Enter') {
-            dispatch.onTodoUpdate(props.id, currentTodoText);
+            dispatch.onTodoUpdate(props.id, currentTodoText, completed);
             setIsEdit(false);
         }
     }
+
+    const onTodoChecked = () => {
+        setCompleted(!completed);
+        dispatch.onTodoUpdate(props.id, currentTodoText, completed);
+    }
     
     return <li className="todo-item">
+        <input type="checkbox" onChange={onTodoChecked} checked={completed} />
         <div className="text">
-            <div className={isEdit === false ? 'view' : ''} onDoubleClick={onTodoTextEdit}><span>{currentTodoText}</span></div>
+            <div className={`${isEdit === false ? 'view' : ''} ${completed ? 'through' : ''}`} onDoubleClick={onTodoTextEdit}><span>{currentTodoText}</span></div>
             <div className={isEdit ? 'view' : ''}>
                 <input 
-                    onInput={onTodoTextUpdate} 
+                    onChange={onTodoTextUpdate} 
                     onKeyDown={onTodoUpdate}
                     value={currentTodoText} 
                     type="text" 

@@ -59,11 +59,13 @@ input[type="text"] {
 ul {
   padding: 0;
 }
+li {
+  list-style: none;
+}
 .todo-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  list-style: none;
   margin-top: 10px;
   height: 30px;
 }
@@ -77,6 +79,10 @@ ul {
 .todo-item .text > .view {
   display: block;
 }
+.todo-item .text > .through {
+  text-decoration: line-through;
+  color: #c3c3c3;
+}
 .todo-item .text input {
   width: 100%;
   height: 30px;
@@ -86,10 +92,30 @@ ul {
   width: 50px;
   height: 30px;
   margin-left: 5px;
-  background-color: #f5cc92;
+  background-color: #909eaf;
   outline: none;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   font-size: 14px;
+  color: #f1f1f1;
+}
+
+/* todo-tab */
+.todo-tab ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo-tab ul li {
+  flex: 1;
+  text-align: center;
+  line-height: 40px;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.todo-tab ul li.on, .todo-tab ul li:hover {
+  background-color: #909eaf;
+  color: #f1f1f1;
 }

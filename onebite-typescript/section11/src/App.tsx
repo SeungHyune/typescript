@@ -12,6 +12,7 @@ type onCreateTodo = {
   data: {
     id: string;
     content: string;
+    completed: boolean;
   }
 }
 
@@ -25,6 +26,7 @@ type onUpdateTodo = {
   data: {
     id: string;
     content: string;
+    completed: boolean;
   }
 }
 
@@ -45,7 +47,8 @@ function reducer(state: Todo[], action: Action) {
     }
     case 'UPDATE': {
       const updateTodoIndex = state.findIndex(todo => todo.id === action.data.id);
-      state[updateTodoIndex] = {...state[updateTodoIndex], content: action.data.content};
+      state[updateTodoIndex] = {...state[updateTodoIndex], content: action.data.content, completed: action.data.completed};
+      console.log(state, action);
       setItem(TODOS, [...state]);
       return state;
     }
@@ -57,7 +60,7 @@ export const TodoStateContext = React.createContext<Todo[] | null>(null);
 export const TodoDispatchContext = React.createContext<{
   onClickAdd: (text: string) => void;
   onClickDelete: (id: string) => void;
-  onTodoUpdate: (id: string, text: string) => void;
+  onTodoUpdate: (id: string, text: string, completed: boolean) => void;
 
 } | null>(null);
 
@@ -76,6 +79,7 @@ function App() {
       data: {
         id: generateUUID(),
         content: text,
+        completed: false,
       }
     })
 
@@ -88,12 +92,13 @@ function App() {
     })
   }
 
-  const onTodoUpdate = (id: string, text: string) => {
+  const onTodoUpdate = (id: string, text: string, completed: boolean) => {
     dispatch({
       type: 'UPDATE',
       data: {
         id,
-        content: text
+        content: text,
+        completed
       }
     })
   }
