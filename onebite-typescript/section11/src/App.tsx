@@ -6,6 +6,7 @@ import { Todo } from './types/types';
 import { setItem, getItem } from './utils/storage';
 import { generateUUID } from'./utils/uuid';
 import _ from 'lodash';
+import TotalTodoCount from './components/TotalCount';
 
 type onCreateTodo = {
   type: 'CREATE';
@@ -37,7 +38,7 @@ const TODOS = 'todos';
 function reducer(state: Todo[], action: Action) {
   switch(action.type) {
     case 'CREATE': {
-      setItem(TODOS, [...state, action.data])
+      setItem(TODOS, [...state, action.data]);
       return [...state, action.data];
     }
     case 'DELETE': {
@@ -46,11 +47,11 @@ function reducer(state: Todo[], action: Action) {
       return removeTodos;
     }
     case 'UPDATE': {
+      const todos = [...state];
       const updateTodoIndex = state.findIndex(todo => todo.id === action.data.id);
-      state[updateTodoIndex] = {...state[updateTodoIndex], content: action.data.content, completed: action.data.completed};
-      console.log(state, action);
-      setItem(TODOS, [...state]);
-      return state;
+      todos[updateTodoIndex] = {...todos[updateTodoIndex], content: action.data.content, completed: action.data.completed};
+      setItem(TODOS, [...todos]);
+      return todos;
     }
   }
 }
@@ -114,6 +115,7 @@ function App() {
         }}>
           <div className="todo-wrap">
             <Editor/>
+            <TotalTodoCount />
             <TodoList todos={todos} />
           </div>
         </TodoDispatchContext.Provider>

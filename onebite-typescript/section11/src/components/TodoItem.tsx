@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react';
+import React,{ useState, useRef } from 'react';
 import { useTodoDispatch } from '../App';
 import { Todo } from '../types/types';
 
 interface Props extends Todo {}
 
-export default function TodoItem(props: Props) {
+function TodoItem(props: Props) {
     const todoTextRef = useRef<HTMLInputElement>(null);
     const [isEdit, setIsEdit] = useState(false);
     const [currentTodoText, setCurrentTodoText] = useState(props.content);
@@ -40,9 +40,10 @@ export default function TodoItem(props: Props) {
     }
 
     const onTodoChecked = () => {
-        setCompleted(!completed);
-        dispatch.onTodoUpdate(props.id, currentTodoText, completed);
+        setCompleted(!completed)
+        dispatch.onTodoUpdate(props.id, currentTodoText, !completed);
     }
+
     
     return <li className="todo-item">
         <input type="checkbox" onChange={onTodoChecked} checked={completed} />
@@ -60,3 +61,5 @@ export default function TodoItem(props: Props) {
         <button onClick={onClickButton}>삭제</button>
     </li>
 }
+
+export default React.memo(TodoItem)

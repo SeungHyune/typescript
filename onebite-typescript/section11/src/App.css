@@ -119,3 +119,10 @@ li {
   background-color: #909eaf;
   color: #f1f1f1;
 }
+
+/* total todo count */
+.total-todo-count {
+  text-align: center;
+  padding: 20px 0 10px;
+  font-size: 18px;
+}
