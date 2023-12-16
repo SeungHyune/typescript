@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useState } from 'react';
 import './App.css';
 import Editor from './components/Editor';
 import TodoList from './components/TodoList';
@@ -6,7 +6,6 @@ import { Todo } from './types/types';
 import { setItem, getItem } from './utils/storage';
 import { generateUUID } from'./utils/uuid';
 import _ from 'lodash';
-import TotalTodoCount from './components/TotalCount';
 
 type onCreateTodo = {
   type: 'CREATE';
@@ -34,6 +33,7 @@ type onUpdateTodo = {
 type Action = onCreateTodo | onDeleteTodo | onUpdateTodo
 
 const TODOS = 'todos';
+const TODO_TAB = 'todoTab'
 
 function reducer(state: Todo[], action: Action) {
   switch(action.type) {
@@ -73,6 +73,7 @@ export function useTodoDispatch() {
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, getItem(TODOS, []));
+  const [todoTab, setTodoTab] = useState(getItem(TODO_TAB, ['Total'])[0]);
 
   const onClickAdd = (text: string) => {
     dispatch({
@@ -104,6 +105,12 @@ function App() {
     })
   }
 
+  const onTodoTabChange = (type: string) => {
+    setItem(TODO_TAB, [type])
+    setTodoTab(type);
+
+  }
+
   return (
     <div className="App">
       <h1>TodoList</h1>
@@ -115,8 +122,7 @@ function App() {
         }}>
           <div className="todo-wrap">
             <Editor/>
-            <TotalTodoCount />
-            <TodoList todos={todos} />
+            <TodoList todos={todos} todoTab={todoTab} onTodoTabChange={onTodoTabChange}/>
           </div>
         </TodoDispatchContext.Provider>
       </TodoStateContext.Provider>

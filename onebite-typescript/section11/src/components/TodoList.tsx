@@ -1,54 +1,62 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import TotalTodoCount from './TotalCount';
 import TodoItem from './TodoItem';
 import { Todo } from '../types/types';
 
-
-
 interface Todos {
-    todos: Todo[]
+    todos: Todo[];
+    todoTab: string;
+    onTodoTabChange(type: string): void
 }
 
-const TodoList = (props: Todos) => {
-    const [todos,setTodos] = useState(props.todos);
-    const [todoTab, setTodoTab] = useState([true,false,false]);
+const TodoList = ({todos, todoTab, onTodoTabChange }: Todos) => {
+    const [todoList,setTodoList] = useState(todos);
 
     const onTotalTodos = () => {
-        setTodoTab([true,false,false])
-        setTodos(props.todos);
+        onTodoTabChange('Total')
     }
 
     const onThingTodos = () => {
-        setTodoTab([false,true,false])
-        const thingTodos = props.todos.filter(todo => !todo.completed);
-        setTodos(thingTodos);
+        onTodoTabChange('Thing')
     }
 
     const onCompletedTodos = () => {
-        setTodoTab([false,false,true])
-        const completedTodos = props.todos.filter(todo => todo.completed);
-        setTodos(completedTodos);
+        onTodoTabChange('Completed')
     }
 
     useEffect(() => {
-        setTodos(props.todos);
-    }, [props.todos])
+        switch(todoTab) {
+            case 'Total':
+            setTodoList(todos);
+            break;
+            case 'Thing':
+            const thingTodos = todos.filter(todo => !todo.completed);
+            setTodoList(thingTodos);
+            break;
+            case 'Completed':
+            const completedTodos = todos.filter(todo => todo.completed);
+            setTodoList(completedTodos);
+            break
+        }
+    }, [todos, todoTab])
 
     return (
         <div>
+            <TotalTodoCount todos={todoList} />
             <ul>
-                {todos.map((todo: Todo) => (
+                {todoList.map((todo: Todo) => (
                     <TodoItem key={todo.id} {...todo} />
                 ))}
             </ul>
             <div className="todo-tab">
                 <ul>
-                    <li className={todoTab[0] ? 'on' : ''} onClick={onTotalTodos}>전체</li>
-                    <li className={todoTab[1] ? 'on' : ''} onClick={onThingTodos}>해야할 일</li>
-                    <li className={todoTab[2] ? 'on' : ''} onClick={onCompletedTodos}>완료한 일</li>
+                    <li className={todoTab === 'Total' ? 'on' : ''} onClick={onTotalTodos}>전체</li>
+                    <li className={todoTab === 'Thing' ? 'on' : ''} onClick={onThingTodos}>해야할 일</li>
+                    <li className={todoTab === 'Completed' ? 'on' : ''} onClick={onCompletedTodos}>완료한 일</li>
                 </ul>
             </div>
         </div>
     )
 }
 
-export default TodoList;
+export default React.memo(TodoList);
