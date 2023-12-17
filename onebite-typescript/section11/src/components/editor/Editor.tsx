@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTodoDispatch } from '../App';
+import { useTodoDispatch } from '../../App';
 
 export default function Editor() {
     

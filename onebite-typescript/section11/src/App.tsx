@@ -1,7 +1,7 @@
 import React, { useReducer, useContext, useState } from 'react';
 import './App.css';
-import Editor from './components/Editor';
-import TodoList from './components/TodoList';
+import Editor from './components/editor/Editor';
+import TodoList from './components/todolist/TodoList';
 import { Todo } from './types/types';
 import { setItem, getItem } from './utils/storage';
 import { generateUUID } from'./utils/uuid';

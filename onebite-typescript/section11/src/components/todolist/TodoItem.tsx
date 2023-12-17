@@ -1,6 +1,6 @@
 import React,{ useState, useRef } from 'react';
-import { useTodoDispatch } from '../App';
-import { Todo } from '../types/types';
+import { useTodoDispatch } from '../../App';
+import { Todo } from '../../types/types';
 
 interface Props extends Todo {}
 
