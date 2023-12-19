@@ -1,7 +1,6 @@
 import React, { useReducer, useContext, useState } from 'react';
 import './App.css';
-import Editor from './components/editor/Editor';
-import TodoList from './components/todolist/TodoList';
+import Home from './components/common/Home';
 import { Todo } from './types/types';
 import { setItem, getItem } from './utils/storage';
 import { generateUUID } from'./utils/uuid';
@@ -13,6 +12,7 @@ type onCreateTodo = {
     id: string;
     content: string;
     completed: boolean;
+    date: number;
   }
 }
 
@@ -30,7 +30,12 @@ type onUpdateTodo = {
   }
 }
 
-type Action = onCreateTodo | onDeleteTodo | onUpdateTodo
+type onTodoMonthChange = {
+  type: 'CHANGE';
+  data: Todo[]
+}
+
+type Action = onCreateTodo | onDeleteTodo | onUpdateTodo | onTodoMonthChange
 
 const TODOS = 'todos';
 const TODO_TAB = 'todoTab'
@@ -53,6 +58,9 @@ function reducer(state: Todo[], action: Action) {
       setItem(TODOS, [...todos]);
       return todos;
     }
+    case 'CHANGE': {
+      return action.data;
+    }
   }
 }
 
@@ -62,7 +70,7 @@ export const TodoDispatchContext = React.createContext<{
   onClickAdd: (text: string) => void;
   onClickDelete: (id: string) => void;
   onTodoUpdate: (id: string, text: string, completed: boolean) => void;
-
+  onTodoMonthChange: (newTodoList: Todo[]) => void;
 } | null>(null);
 
 export function useTodoDispatch() {
@@ -82,6 +90,7 @@ function App() {
         id: generateUUID(),
         content: text,
         completed: false,
+        date: new Date().getTime(),
       }
     })
 
@@ -111,19 +120,23 @@ function App() {
 
   }
 
+  const onTodoMonthChange = (newTodoList: Todo[]) => {
+    dispatch({
+      type: 'CHANGE',
+      data: [...newTodoList]
+    });
+  }
+
   return (
     <div className="App">
-      <h1>TodoList</h1>
       <TodoStateContext.Provider value={todos}>
         <TodoDispatchContext.Provider value={{
           onClickAdd,
           onClickDelete,
-          onTodoUpdate
+          onTodoUpdate,
+          onTodoMonthChange
         }}>
-          <div className="todo-wrap">
-            <Editor/>
-            <TodoList todos={todos} todoTab={todoTab} onTodoTabChange={onTodoTabChange}/>
-          </div>
+          <Home todoTab={todoTab} onTodoTabChange={onTodoTabChange} />
         </TodoDispatchContext.Provider>
       </TodoStateContext.Provider>
     </div>

@@ -1,6 +1,4 @@
-import { DateConstructor } from '../types/types';
-
-export const getStringDate = (date: DateConstructor) => {
+export const getStringDate = (date: Date) => {
     const year = date.getFullYear();
     let month = String(date.getMonth() + 1);
     let day = String(date.getDate());
