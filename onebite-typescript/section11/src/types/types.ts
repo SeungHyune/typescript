@@ -3,3 +3,10 @@ export interface Todo {
     content: string;
     completed: boolean;
 }
+
+export interface DateConstructor {
+    new(): Date;
+    getFullYear(): string;
+    getMonth(): string;
+    getDate(): string;
+}
