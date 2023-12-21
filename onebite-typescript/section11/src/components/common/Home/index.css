@@ -1,6 +1,8 @@
 header {
     display: flex;
     align-items: center;
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 header h1.date {
